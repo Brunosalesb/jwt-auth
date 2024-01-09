@@ -22,16 +22,14 @@ public class AuthService
         {
             SigningCredentials = credentials,
             Expires = DateTime.UtcNow.AddHours(1),
-            Subject = GenarateClaims(user)
+            Subject = GenerateClaims(user)
         };
-
-        
         
         var token = handler.CreateToken(tokenDescriptor);
         return handler.WriteToken(token);
     }
 
-    private static ClaimsIdentity GenarateClaims(User user)
+    private static ClaimsIdentity GenerateClaims(User user)
     {
         var ci = new ClaimsIdentity();
 

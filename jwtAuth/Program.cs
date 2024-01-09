@@ -24,7 +24,11 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.AddAuthorization(x => { x.AddPolicy("admin", p => p.RequireRole("admin")); });
+builder.Services.AddAuthorization(x =>
+{
+    x.AddPolicy("admin", p => p.RequireRole("manager"));
+    x.AddPolicy("tech", p => p.RequireRole("developer"));
+});
 
 var app = builder.Build();
 
@@ -58,5 +62,8 @@ app.MapGet("/test/user", (ClaimsPrincipal user) => new
 
 app.MapGet("/test/admin", () => "admin OK!")
     .RequireAuthorization("admin");
+
+app.MapGet("/test/tech", () => "tech OK!")
+    .RequireAuthorization("tech");
 
 app.Run();
